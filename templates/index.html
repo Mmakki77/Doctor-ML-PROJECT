@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doc.ML</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container nav-container">
+      <a class="navbar-brand" href="{{ url_for('home') }}">
+        <img src="{{ url_for('static', filename='img/doctorml-logo.png') }}" class="d-inline-block align-top" alt="">
+      </a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/doctors">
+            <lord-icon src="https://cdn.lordicon.com/brweqbnv.json" trigger="loop" state="loop-cycle"
+              colors="primary:#bcc3b8,secondary:#50b174" style="width:70px;height:70px" class="icon">
+            </lord-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div class="container symptoms-checkbox">
+    <div class="header text-center mb-3">
+      <h2>Select your symptoms</h2>
+    </div>
+    <form method="POST" action="/prediction" onsubmit="return validateForm()">
+      <div class="row mb-2">
+        <!-- Dermatological Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Dermatological Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [1, 4, 8, 12, 16, 18] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Gastrointestinal Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Gastrointestinal Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [5, 6, 7, 10, 15, 23, 24, 19] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Respiratory Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Respiratory Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [2, 9, 21, 30] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <!-- Systemic Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Systemic Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [3, 11, 22, 26, 20, 25] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- Neurological Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Neurological Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [27, 28, 14] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Cardiovascular Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Cardiovascular Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [13, 29] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Urinary Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Urinary Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [17] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Miscellaneous Symptoms -->
+        <div class="col-md-4 symptom-category">
+          <h4>Miscellaneous Symptoms</h4>
+          {% for symptom in symptoms if symptom[0] in [7] %}
+          <div class="form-check">
+            <input class="form-check-input custom-checkbox" type="checkbox" name="{{ symptom[1] }}"
+              value="{{ symptom[1] }}" id="symptom{{ symptom[0] }}">
+            <label class="form-check-label" for="symptom{{ symptom[0] }}">{{ symptom[1] }}</label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+  </div>
+
+  <div class="text-center mb-4 mt-3">
+    <button type="submit" id="submit-btnid" class="btn submit-btn">Submit</button>
+  </div>
+  </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      // Get all checkboxes
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      var checkedCount = 0;
+
+      // Count the number of checked checkboxes
+      checkboxes.forEach(function (checkbox) {
+        if (checkbox.checked) {
+          checkedCount++;
+        }
+      });
+
+      // Define the minimum number of checkboxes required
+      var minRequired = 3;
+
+      // If the number of checked checkboxes is less than the required number, display an alert and return false to prevent form submission
+      if (checkedCount < minRequired) {
+        alert("Please select at least " + minRequired + " checkboxes.");
+        return false;
+      }
+      // Otherwise, allow form submission
+      return true;
+    }
+  </script>
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

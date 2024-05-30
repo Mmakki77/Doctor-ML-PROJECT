@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Doc.ML</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container nav-container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='img/doctorml-logo.png') }}" class="d-inline-block align-top"
+                    alt="">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/doctors">
+                        <lord-icon src="https://cdn.lordicon.com/brweqbnv.json" trigger="loop" state="loop-cycle"
+                            colors="primary:#bcc3b8,secondary:#50b174" style="width:70px;height:70px" class="icon">
+                        </lord-icon>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container doctors-body">
+
+        <!-- Doctors Section -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h1 class="mb-4">Doctors</h1>
+                    <p>Here is a list of all available doctors for you</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row doctors-table">
+            <!-- Doctors Table -->
+            <div class="col-md-12">
+                <div class="doctors-section">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Doctor</th>
+                                <th scope="col">Field</th>
+                                <th scope="col">Hospital</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doctor in doctors %}
+                            <tr>
+                                <td>{{ doctor[0] }}</td>
+                                <td>{{ fields[doctors.index(doctor)][0] }}</td>
+                                <td>{{ hospitals[doctors.index(doctor)][0] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
